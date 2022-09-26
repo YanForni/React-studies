@@ -5,48 +5,45 @@ import { App } from './App';
 
 
 createServer({
-
-  models:{
+  models: {
     transaction: Model,
   },
-
   seeds(server) {
     server.db.loadData({
-      transaction: [
+      transactions: [
         {
           id: 1,
-          title: 'Freelance de um site',
+          title: 'Freela webpage',
           type: 'deposit',
-          category: 'dev',
-          amount: 6000,
-          createdAt: new Date('2021-02-12 9:00:00')
+          category: 'Dev',
+          amount: 4500,
+          createdAt: new Date('2021-03-15 08:00:00')
         },
+
         {
           id: 2,
-          title: 'Aluguel',
+          title: 'Supermercado',
           type: 'withdraw',
-          category: 'casa',
-          amount: 1300,
-          createdAt: new Date('2021-02-21 10:00:00')
-        },
+          category: 'Compras',
+          amount: 1200,
+          createdAt: new Date('2021-03-15 13:00:00')
+        }
       ]
-    })
-  }
-
+    });
+  },
   routes() {
-    this.namespace= 'api';
-    
-    this.get('/transactions', ()=> {
-      return this.schema.all('transactions');
-    })
+    this.namespace = 'api';
 
-    this.post('/transactions', (schema, request)=> {
-      const data = JSON.parse(request.requestBody)
+    this.get('/transactions', () => {
+      return this.schema.all('transaction')
+    });
 
-      return schema.create('transaction', data)
-    })
+    this.post('/transactions', (schema, request) => {
+      const data = JSON.parse(request.requestBody);
+      return schema.create('transaction', data);
+    });
   }
-})
+});
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
