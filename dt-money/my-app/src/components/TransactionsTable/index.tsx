@@ -3,12 +3,10 @@ import { api } from "../../services/api";
 import { TransactionsContext } from "../../TransactionsContext";
 import { Container } from "./styles";
 
-
-
 export function TransactionsTable() {
-  const { transactions }= useContext(TransactionsContext);
+  const { transactions } = useContext(TransactionsContext);
 
-  return(
+  return (
     <Container>
       <table>
         <thead>
@@ -21,18 +19,25 @@ export function TransactionsTable() {
         </thead>
 
         <tbody>
-          {transactions.map(transaction => (
-              <tr key={transaction.id}>
-                <td>{transaction.title}</td>
-                <td className={transaction.type}>{transaction.amount}</td>
-                <td>{transaction.category}</td>
-                <td>{transaction.createdAt}</td>
-              </tr>
-            )
-          )}
-          
+          {transactions.map((transaction) => (
+            <tr key={transaction.id}>
+              <td>{transaction.title}</td>
+              <td className={transaction.type}>
+                {new Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                }).format(transaction.amount)}
+              </td>
+              <td>{transaction.category}</td>
+              <td>
+                {new Intl.DateTimeFormat("pt-BR").format(
+                  new Date(transaction.createdAt)
+                )}
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </Container>
-  )
+  );
 }
